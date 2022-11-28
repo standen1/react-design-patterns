@@ -1,27 +1,23 @@
 import React from "react";
-import { Modal } from "./components/layouts/Modal";
-import { SplitScreen } from "./components/layouts/SplitScreen";
+import axios from "axios";
+import { DataSource } from './components/containers/DataSource';
+import { UserInfo } from "./components/people/UserInfo";
+import { ProductInfo } from './components/products/ProductInfo';
 
-const LeftComponent = () => (
-  <h1
-    style={{ backgroundColor: 'red'}}
-  >
-    Left!
-  </h1>
-);
-
-const RightComponent = () => (
-  <p
-    style={{ backgroundColor: 'green'}}
-  >
-    Right!
-  </p>
-);
+const getServerData = url => async () => {
+  const response = await axios.get(url);
+  return response.data;
+}
 
 function App() {
   return (
     <>
-      
+      <DataSource
+        getDataFunc={getServerData('/users/123')}
+        resourceName="user"
+      >
+        <UserInfo />
+      </DataSource>
     </>
   );
 }
